@@ -49,7 +49,7 @@
                         <a class="nav-link" href="{{ route('home') }}">Books</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Users</a>
+                        <a class="nav-link" href="{{ route('user') }}">Users</a>
                     </li>
                     @endguest
                 </ul>
