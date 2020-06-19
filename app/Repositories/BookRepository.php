@@ -38,6 +38,6 @@ class BookRepository
          ->appends('sortBy', request('sortBy'))
          ->appends('orderBy', request('orderBy'));
          
-        return view('home', compact('books', 'sortBy', 'perPage', 'orderBy'));
+        return view('pages.home', compact('books', 'sortBy', 'perPage', 'orderBy'));
     }
 }
