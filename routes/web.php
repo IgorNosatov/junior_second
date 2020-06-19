@@ -13,4 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'BookController@index')->name('home');
+
+
+Auth::routes(['verify' => true]);
+
+Route::get('/', 'HomeController@index')->name('home');
