@@ -19,8 +19,12 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('users', 'UserController@index')->name('user');
-Route::get('user/create', 'UserController@create')->name('user.create');
-Route::post('user/store', 'UserController@store')->name('user.store');
-Route::get('user/{user}/edit', 'UserController@edit')->name('user.edit');
-Route::patch('user/{user}', 'UserController@update')->name('user.update');
+Route::group([
+    'prefix' => '/user',
+], function () {
+    Route::get('/', 'UserController@index')->name('user');
+    Route::get('/create', 'UserController@create')->name('user.create');
+    Route::post('/store', 'UserController@store')->name('user.store');
+    Route::get('/{user}/edit', 'UserController@edit')->name('user.edit');
+    Route::patch('/{user}', 'UserController@update')->name('user.update');
+});
