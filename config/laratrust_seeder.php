@@ -4,12 +4,12 @@ return [
     /**
      * Control if the seeder should create a user per role while seeding the data.
      */
-    'create_users' => false,
+    'create_users' => true,
 
     /**
      * Control if all the laratrust tables should be truncated before running the seeder.
      */
-    'truncate_tables' => true,
+    'truncate_tables' => false,
 
     'roles_structure' => [
         'superadministrator' => [
@@ -23,9 +23,6 @@ return [
         ],
         'user' => [
             'profile' => 'r,u',
-        ],
-        'role_name' => [
-            'module_1_name' => 'c,r,u,d',
         ]
     ],
 
