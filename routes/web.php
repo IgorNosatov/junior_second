@@ -22,7 +22,7 @@ Route::group(['prefix' => '/book','middleware' => ['role:admin']], function () {
     Route::post('/store', 'BookController@store')->name('book.store');
     Route::get('/{book}/edit', 'BookController@edit')->name('book.edit');
     Route::patch('/{book}', 'BookController@update')->name('book.update');
-    Route::delete('/{book}', 'BookController@delete')->name('book.delete');
+    Route::delete('/{book}', 'BookController@destroy')->name('book.destroy');
 });
 
 

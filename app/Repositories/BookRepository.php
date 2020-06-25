@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Book;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
-use Illuminate\Support\Facades\Hash;
 
 class BookRepository
 {
@@ -43,30 +42,60 @@ class BookRepository
         return view('pages.home', compact('books', 'sortBy', 'perPage', 'orderBy'));
     }
 
-    public function storeBook(BookRequest $request){
-        $data = new Book([
-            'name' => $request->get('name'),
-            'email'=> $request->get('email'),
-            'password'=> Hash::make($request->get('password'))
-        ]);
+
+    public function storeBook(BookRequest $request)
+    {
+        if ($files = $request->file('image')) {
+           $destinationPath = 'image/'; // upload path
+           $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+           $files->move($destinationPath, $profileImage);
+           $insert['image'] = "$profileImage";
+        }
+         
+        $insert['title'] = $request->get('title');
+        $insert['author'] = $request->get('author');
+        $insert['description'] = $request->get('description');
+        $insert['genre'] = $request->get('genre');
  
-        $data->save();
+        Book::insert($request->except(['_token']));
+    
         return redirect('/')->with('success', 'book has been added');
     }
 
     public function editBook($id)
     {
-        $book = Book::find($id);
-        return view('pages.edit_book', compact('book'));        
+        $book = Book::findOrFail($id);
+        return view('pages.edit_book', compact('book'));
     }
 
     public function updateBook(BookRequest $request, $id)
     {
-        $book = Book::find($id);
-        $book->name =  $request->get('name');
-        $book->email = $request->get('email');
-        $book->password = Hash::make($request->get('password'));
+
+        if ($files = $request->file('image')) {
+           $destinationPath = 'image/'; // upload path
+           $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+           $files->move($destinationPath, $profileImage);
+           $book['image'] = "$profileImage";
+        }
+         
+        $book = Book::findOrFail($id);
+        $book->title =  $request->get('title');
+        $book->author = $request->get('author');
+        $book->description = $request->get('description');
+        $book->image = $request->get('image');
+        $book->genre = $request->get('genre');
         $book->save();
+   
         return redirect('/')->with('success', 'book updated!');
     }
+
+    public function deleteBook($id)
+    {
+        $data = Book::where('id', $id);
+        $data->delete();
+
+        return redirect('/')->with('success', 'Book is deleted');
+    }
+
+    
 }

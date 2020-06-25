@@ -24,7 +24,11 @@ class BookRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'required|max:255',
+            'author' => 'required|max:65',
+            'description' => 'required|max:400',
+            'image' => 'required',
+            'genre' => 'required|max:65',
         ];
     }
 }

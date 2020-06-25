@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\BookRepository;
+use App\Http\Requests\BookRequest;
 
 class BookController extends Controller
 {
@@ -16,32 +17,35 @@ class BookController extends Controller
         $this->bookRepository = $bookRepository;
     }
 
-    public function createBook()
+    public function create()
     {
         return view('pages.create_book');
     }
 
 
-    public function storeBook(Request $request)
+    public function store(BookRequest $request)
     {
         $book = $this->bookRepository->storeBook($request);
         return  $book;
     }
 
 
-    public function editBook($id)
+    public function edit($id)
     {
-        //
+        $book = $this->bookRepository->editBook($id);
+        return  $book;
     }
 
-    public function updateBook(Request $request, $id)
+    public function update(BookRequest $request, $id)
     {
-
+        $book = $this->bookRepository->updateBook($request, $id);
+        return  $book;
     }
 
 
-    public function destroyBook($id)
+    public function destroy($id)
     {
-        //
+        $book = $this->bookRepository->deleteBook($id);
+        return  $book;
     }
 }
