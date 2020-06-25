@@ -7,6 +7,7 @@ use Laratrust\Models\LaratrustPermission;
 class Permission extends LaratrustPermission
 {
     protected $fillable = [
-        'id', 'name', 'email', 'password',
+
+         'name', 'email', 'password',
     ];
 }

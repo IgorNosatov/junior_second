@@ -12,17 +12,21 @@ return [
     'truncate_tables' => false,
 
     'roles_structure' => [
-        'superadministrator' => [
+        'admin' => [
             'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u'
+            'books' => 'c,r,u,d'
         ],
+<<<<<<< HEAD
+        'guest' => [
+            'books' => 'c,r,u,d'
+=======
         'administrator' => [
             'users' => 'c,r,u,d',
             'profile' => 'r,u'
         ],
         'user' => [
             'profile' => 'r,u',
+>>>>>>> 09ccf33f7a79425aa3dedc8375dad15314d70506
         ]
     ],
 

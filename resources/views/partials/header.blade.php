@@ -48,9 +48,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">Books</a>
                     </li>
+                    @role('admin')
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('user') }}">Users</a>
                     </li>
+                    @endrole
                     @endguest
                 </ul>
             </div>
