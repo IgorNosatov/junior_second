@@ -51,18 +51,18 @@ class UserRepository {
         ]);
  
         $data->save();
-        return redirect('/users')->with('success', 'user has been added');
+        return redirect('/user')->with('success', 'user has been added');
     }
 
     public function editUser($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         return view('pages.edit_user', compact('user'));        
     }
 
     public function updateUser(UserRequest $request, $id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         $user->name =  $request->get('name');
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));

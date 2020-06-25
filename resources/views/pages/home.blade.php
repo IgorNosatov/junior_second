@@ -5,6 +5,11 @@
 @section('content')
 <div class="row">
     <div class="col-md-3 col-sm-12">
+        @role('admin')
+        <div class="d-flex justify-content-start">
+            <a class="btn btn-success mb-3" href="{{ route('book.create') }}">Add new book</a>
+        </div>
+        @endrole
         <form action="/">
             <div class="form-group">
                 <label for="exampleInputEmail1">Search book:</label>
@@ -56,6 +61,7 @@
             <div class="row no-gutters">
                 <div class="col-md-4">
                     <img src="{{ asset($book['image']) }}" class="card-img" alt="...">
+                    
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -63,6 +69,16 @@
                         <h5>Book Author:{{ $book->author }}</h5>
                         <p class="card-text">Book Genre:{{ $book->genre }}</p>
                         <p class="card-text">{{ $book->description }}</p>
+                        @role('admin')
+                        <div class="d-flex justify-content-start">
+                            <form action="{{ route('book.destroy', $book->id)}}" method="post">
+                                {{ csrf_field() }}
+                                @method('DELETE')
+                                <button class="btn btn-danger m-1" type="submit">Delete book</button>
+                            </form>
+                            <a class="btn btn-warning m-1" href="{{ route('book.edit',$book->id) }}">Edit book</a>
+                        </div>
+                        @endrole
                     </div>
                 </div>
             </div>
