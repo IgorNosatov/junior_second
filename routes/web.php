@@ -17,6 +17,15 @@ Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::group(['prefix' => '/book','middleware' => ['role:admin']], function () {
+    Route::get('/create', 'BookController@create')->name('book.create');
+    Route::post('/store', 'BookController@store')->name('book.store');
+    Route::get('/{book}/edit', 'BookController@edit')->name('book.edit');
+    Route::patch('/{book}', 'BookController@update')->name('book.update');
+    Route::delete('/{book}', 'BookController@delete')->name('book.delete');
+});
+
+
 Route::group(['prefix' => '/user', 'middleware' => ['role:admin']], function () {
     Route::get('/', 'UserController@index')->name('user');
     Route::get('/create', 'UserController@create')->name('user.create');

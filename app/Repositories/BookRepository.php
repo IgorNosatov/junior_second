@@ -4,6 +4,8 @@ namespace App\Repositories;
 
 use App\Book;
 use Illuminate\Http\Request;
+use App\Http\Requests\BookRequest;
+use Illuminate\Support\Facades\Hash;
 
 class BookRepository
 {
@@ -39,5 +41,32 @@ class BookRepository
          ->appends('orderBy', request('orderBy'));
          
         return view('pages.home', compact('books', 'sortBy', 'perPage', 'orderBy'));
+    }
+
+    public function storeBook(BookRequest $request){
+        $data = new Book([
+            'name' => $request->get('name'),
+            'email'=> $request->get('email'),
+            'password'=> Hash::make($request->get('password'))
+        ]);
+ 
+        $data->save();
+        return redirect('/')->with('success', 'book has been added');
+    }
+
+    public function editBook($id)
+    {
+        $book = Book::find($id);
+        return view('pages.edit_book', compact('book'));        
+    }
+
+    public function updateBook(BookRequest $request, $id)
+    {
+        $book = Book::find($id);
+        $book->name =  $request->get('name');
+        $book->email = $request->get('email');
+        $book->password = Hash::make($request->get('password'));
+        $book->save();
+        return redirect('/')->with('success', 'book updated!');
     }
 }
