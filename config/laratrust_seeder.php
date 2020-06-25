@@ -16,18 +16,8 @@ return [
             'users' => 'c,r,u,d',
             'books' => 'c,r,u,d'
         ],
-<<<<<<< HEAD
         'guest' => [
-            'books' => 'c,r,u,d'
-=======
-        'administrator' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u'
-        ],
-        'user' => [
-            'profile' => 'r,u',
->>>>>>> 09ccf33f7a79425aa3dedc8375dad15314d70506
-        ]
+            'books' => 'c,r,u,d' ]
     ],
 
     'permissions_map' => [
