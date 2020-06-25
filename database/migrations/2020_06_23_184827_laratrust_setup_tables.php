@@ -20,7 +20,6 @@ class LaratrustSetupTables extends Migration
                 $table->string('display_name')->nullable();
                 $table->string('description')->nullable();
                 $table->timestamps();
-
             });
         }
 
@@ -42,8 +41,8 @@ class LaratrustSetupTables extends Migration
                 $table->uuid('role_id');
                 $table->uuid('user_id');
                 $table->string('user_type');
-             });
 
+             });
             Schema::table('role_user', function($table) {
                 $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
@@ -75,7 +74,7 @@ class LaratrustSetupTables extends Migration
         if (!Schema::hasTable('permission_role')) {
             Schema::create('permission_role', function (Blueprint $table) {
                 $table->uuid('permission_id');
-                $table->uuid('role_id');
+                $table->uuid('role_id'); 
                 
             });
             Schema::table('permission_role', function($table) {

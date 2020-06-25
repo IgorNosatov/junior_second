@@ -13,5 +13,6 @@ class DatabaseSeeder extends Seeder
     {
          $this->call(BookTableSeeder::class);
          $this->call(LaratrustSeeder::class);
+         $this->call(RoleSeeder::class);
     }
 }

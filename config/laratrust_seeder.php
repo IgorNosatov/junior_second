@@ -12,20 +12,12 @@ return [
     'truncate_tables' => true,
 
     'roles_structure' => [
-        'superadministrator' => [
+        'admin' => [
             'users' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u'
+            'books' => 'c,r,u,d'
         ],
-        'administrator' => [
-            'users' => 'c,r,u,d',
-            'profile' => 'r,u'
-        ],
-        'user' => [
-            'profile' => 'r,u',
-        ],
-        'role_name' => [
-            'module_1_name' => 'c,r,u,d',
+        'guest' => [
+            'books' => 'c,r,u,d'
         ]
     ],
 
