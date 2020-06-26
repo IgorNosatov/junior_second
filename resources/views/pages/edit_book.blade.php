@@ -22,7 +22,10 @@
                             <label for="description">Book description</label>
                             <textarea class="form-control" id="description" name="description" rows="8" placeholder="{{ $book->description }}"></textarea>
                         </div>
-
+                        <div class="form-group">
+                            <label for="image">Book image</label>
+                            <input type="file" id="image" name="image" class="form-control" placeholder="Put book image ....." required value="{{ $book->image }}">
+                        </div>
                         <div class="form-group">
                             <label for="genre">Book genre</label>
                             <input type="text" class="form-control" name="genre" value="{{ $book->genre }}">

@@ -74,15 +74,14 @@ class BookRepository
         $cover = $request->file('image');
         $extension = $cover->getClientOriginalExtension();
         Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
-        
-        $book = Book::findOrFail($id);
+
+        $book =  Book::findOrFail($id);
         $book->title = $request->title;
         $book->author = $request->author;
         $book->description = $request->description;
         $book->genre = $request->author;
         $book->image = $cover->getFilename().'.'.$extension;
-        $book->update();
-        
+        $book->save();
         return redirect('/')->with('success', 'book updated!');
     }
 
@@ -90,8 +89,8 @@ class BookRepository
     {
         $data = Book::where('id', $id);
         $data->delete();
-
         return redirect()->route('home');
     }
- 
+
+    
 }
