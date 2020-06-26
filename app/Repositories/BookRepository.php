@@ -49,7 +49,7 @@ class BookRepository
     {
         $cover = $request->file('image');
         $extension = $cover->getClientOriginalExtension();
-        Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
+        Storage::disk('public')->put($cover->getFilename().'.'.$extension, File::get($cover));
     
         $book = new Book();
         $book->title = $request->title;
@@ -60,7 +60,7 @@ class BookRepository
         $book->save();
     
         return redirect()->route('home')
-            ->with('success','Book added successfully...');
+            ->with('success', 'Book added successfully...');
     }
 
     public function editBook($id)
@@ -71,18 +71,28 @@ class BookRepository
 
     public function updateBook(BookRequest $request, $id)
     {
-        $cover = $request->file('image');
-        $extension = $cover->getClientOriginalExtension();
-        Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
-
-        $book =  Book::findOrFail($id);
-        $book->title = $request->title;
-        $book->author = $request->author;
-        $book->description = $request->description;
-        $book->genre = $request->author;
-        $book->image = $cover->getFilename().'.'.$extension;
-        $book->save();
-        return redirect('/')->with('success', 'book updated!');
+        $book = [
+            'title' => $request->title,
+            'author' => $request->author,
+            'description' => $request->description,
+            'genre' => $request->genre
+         ];
+ 
+        if ($files = $request->file('image')) {
+            $destinationPath = 'uploads/';
+            $extension = date('YmdHis') . "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $extension);
+            $book['image'] = "$extension";
+        }
+         
+        $book['title'] = $request->get('title');
+        $book['author'] = $request->get('author');
+        $book['description'] = $request->get('description');
+        $book['genre'] = $request->get('genre');
+ 
+        Book::where('id', $id)->update($book);
+   
+        return redirect()->route('home')->with('success', 'Book updated successfully...');
     }
 
     public function deleteBook($id)
@@ -91,6 +101,4 @@ class BookRepository
         $data->delete();
         return redirect()->route('home');
     }
-
-    
 }
