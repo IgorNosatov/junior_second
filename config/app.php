@@ -175,7 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Laratrust\LaratrustServiceProvider::class,
-    
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
     ],
 
@@ -229,7 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Laratrust'   => Laratrust\LaratrustFacade::class,
-      
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
 
     ],
 

@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['verify' => true]);
 
+Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('login/{provider}/callback','Auth\LoginController@handleProviderCallback');
+
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => '/book','middleware' => ['role:admin']], function () {
