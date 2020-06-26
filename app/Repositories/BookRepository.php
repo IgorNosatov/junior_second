@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Book;
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class BookRepository
 {
@@ -45,21 +47,20 @@ class BookRepository
 
     public function storeBook(BookRequest $request)
     {
-        if ($files = $request->file('image')) {
-           $destinationPath = 'image/'; // upload path
-           $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-           $files->move($destinationPath, $profileImage);
-           $insert['image'] = "$profileImage";
-        }
-         
-        $insert['title'] = $request->get('title');
-        $insert['author'] = $request->get('author');
-        $insert['description'] = $request->get('description');
-        $insert['genre'] = $request->get('genre');
- 
-        Book::insert($request->except(['_token']));
+        $cover = $request->file('image');
+        $extension = $cover->getClientOriginalExtension();
+        Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
     
-        return redirect('/')->with('success', 'book has been added');
+        $book = new Book();
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->description = $request->description;
+        $book->genre = $request->author;
+        $book->image = $cover->getFilename().'.'.$extension;
+        $book->save();
+    
+        return redirect()->route('home')
+            ->with('success','Book added successfully...');
     }
 
     public function editBook($id)
@@ -70,22 +71,18 @@ class BookRepository
 
     public function updateBook(BookRequest $request, $id)
     {
-
-        if ($files = $request->file('image')) {
-           $destinationPath = 'image/'; // upload path
-           $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-           $files->move($destinationPath, $profileImage);
-           $book['image'] = "$profileImage";
-        }
-         
+        $cover = $request->file('image');
+        $extension = $cover->getClientOriginalExtension();
+        Storage::disk('public')->put($cover->getFilename().'.'.$extension,  File::get($cover));
+        
         $book = Book::findOrFail($id);
-        $book->title =  $request->get('title');
-        $book->author = $request->get('author');
-        $book->description = $request->get('description');
-        $book->image = $request->get('image');
-        $book->genre = $request->get('genre');
-        $book->save();
-   
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->description = $request->description;
+        $book->genre = $request->author;
+        $book->image = $cover->getFilename().'.'.$extension;
+        $book->update();
+        
         return redirect('/')->with('success', 'book updated!');
     }
 
@@ -94,8 +91,7 @@ class BookRepository
         $data = Book::where('id', $id);
         $data->delete();
 
-        return redirect('/')->with('success', 'Book is deleted');
+        return redirect()->route('home');
     }
-
-    
+ 
 }

@@ -35,6 +35,7 @@ class UserRepository {
         $users = $users
             ->paginate($perPage)
             ->appends('sortBy', request('sortBy'))
+            ->appends('perPage', request('perPage'))
             ->appends('orderBy', request('orderBy'));
 
 
@@ -67,6 +68,6 @@ class UserRepository {
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));
         $user->save();
-        return redirect('/users')->with('success', 'user updated!');
+        return redirect('/user')->with('success', 'user updated!');
     }
 }

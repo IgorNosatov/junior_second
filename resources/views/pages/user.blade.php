@@ -12,7 +12,7 @@
 </div>
 <div class="row">
     <div class="col-md-3 col-sm-12">
-        <form action="/users/">
+        <form action="/user/">
             <div class="form-group">
                 <label for="exampleInputEmail1">Search User:</label>
                 <input type="search" name="search" class="form-control pb-1" placeholder="Enter book name .....">
@@ -44,7 +44,7 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/users/" class="btn btn-primary">Reset</a>
+            <a href="/user/" class="btn btn-primary">Reset</a>
         </form>
     </div>
     <div class="col-md-9 col-sm-12">
