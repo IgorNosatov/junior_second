@@ -23,11 +23,8 @@
                             <textarea class="form-control" id="description" name="description" rows="8" placeholder="{{ $book->description }}"></textarea>
                         </div>
                         <div class="form-group">
-                            <strong>Book image</strong>
-                            @if($book->image)
-                             <img  src="{{ URL::asset($book->image) }}" alt="products"  class="p-2" width="200px" height="200px">
-                            @endif
-                            <input type="text" name="image" class="form-control" placeholder="" value="{{ $book->image }}">
+                            <label for="image">Book image</label>
+                            <input type="file" id="image" name="image" class="form-control" placeholder="Put book image ....." required value="{{ $book->image }}">
                         </div>
                         <div class="form-group">
                             <label for="genre">Book genre</label>

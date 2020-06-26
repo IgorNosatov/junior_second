@@ -32,13 +32,5 @@ class RoleSeeder extends Seeder
          $guest->description = "Guest";
          $guest->save();
 
-
-          //attach roles to users
-
-          //first user as admin
-         $user1 = User::find('1');   //get user where id is 1
-         $user1->detachRole($admin); //detach role so that we wont get duplicate entry error if we run seeder again
-         $user1->attachRole($admin); //attaching role here
-
     }
 }
