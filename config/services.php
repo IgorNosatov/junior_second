@@ -30,4 +30,17 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    //Add own client_id and client_secret
+    'facebook' => [
+        'client_id' => '',        
+        'client_secret' => '', 
+        'redirect' =>'http://127.0.0.1:8000/callback/facebook',
+    ],
+
+    'google' => [
+        'client_id' => '',        
+        'client_secret' => '',
+        'redirect' =>'http://127.0.0.1:8000/callback/google',
+    ],
+
 ];
