@@ -22,9 +22,15 @@
                             <label for="description">Book description</label>
                             <textarea class="form-control" id="description" name="description" rows="8" placeholder="{{ $book->description }}"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="image">Book image</label>
-                            <input type="file" id="image" name="image" class="form-control" placeholder="Put book image ....." required value="{{ $book->image }}">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <strong>Book image</strong>
+                                @if($book->image)
+                                <img src="{{ asset('uploads/'.$book->image) }}" alt="" title="" height="70" width="70">
+                                @endif
+                                <input type="file" name="image" class="form-control" placeholder="" value="{{ $book->image }}">
+                                <span class="text-danger">{{ $errors->first('image') }}</span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="genre">Book genre</label>

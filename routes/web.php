@@ -21,8 +21,8 @@ Route::group(['prefix' => '/book','middleware' => ['role:admin']], function () {
     Route::get('/create', 'BookController@create')->name('book.create');
     Route::post('/store', 'BookController@store')->name('book.store');
     Route::get('/{book}/edit', 'BookController@edit')->name('book.edit');
-    Route::patch('/{book}', 'BookController@update')->name('book.update');
-    Route::delete('/{book}', 'BookController@destroy')->name('book.destroy');
+    Route::patch('/{book}/update', 'BookController@update')->name('book.update');
+    Route::delete('/{book}/delete', 'BookController@destroy')->name('book.destroy');
 });
 
 
