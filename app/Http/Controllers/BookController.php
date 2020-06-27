@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Repositories\BookRepository;
 use App\Http\Requests\BookRequest;
 
 class BookController extends Controller
 {
-
     protected $bookRepository;
 
     public function __construct(BookRepository $bookRepository)
@@ -22,13 +20,11 @@ class BookController extends Controller
         return view('pages.create_book');
     }
 
-
     public function store(BookRequest $request)
     {
         $book = $this->bookRepository->storeBook($request);
         return  $book;
     }
-
 
     public function edit($id)
     {
@@ -41,7 +37,6 @@ class BookController extends Controller
         $book = $this->bookRepository->updateBook($request, $id);
         return  $book;
     }
-
 
     public function destroy($id)
     {
