@@ -6,7 +6,7 @@ services:
         user: igor
         uid: 1000
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: ./docker-compose/php-fpm/Dockerfile
     image: library
     container_name: library-app
     restart: unless-stopped
