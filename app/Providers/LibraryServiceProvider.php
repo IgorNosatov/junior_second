@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\BookRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\LibraryRepository;
 
 class LibraryServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,10 @@ class LibraryServiceProvider extends ServiceProvider
         });
         $this->app->bind('App\Repositories\UserRepository', function ($app) {
             return new UserRepository();
+        });
+
+        $this->app->bind('App\Repositories\LibraryRepository', function ($app) {
+            return new LibraryRepository();
         });
     }
 }
