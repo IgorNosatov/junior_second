@@ -52,4 +52,6 @@ $app->singleton(
 |
 */
 
+header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
 return $app;
