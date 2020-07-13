@@ -3,22 +3,23 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\LibraryRepository;
+use App\Repositories\API\BookRepository;
 use App\Http\Requests\BookRequest;
+use App\Book;
 use Illuminate\Http\Request;
 
-class LibraryController extends Controller
+class BookController extends Controller
 {
-    protected $libraryRepository;
+    protected $bookRepository;
 
-    public function __construct(LibraryRepository $libraryRepository)
+    public function __construct(BookRepository $bookRepository)
     {
-        $this->libraryRepository = $libraryRepository;
+        $this->bookRepository = $bookRepository;
     }
 
     /**
      * @OA\Get(
-     *     path="/library",
+     *     path="/book",
      *     operationId="booksAll",
      *     tags={"Book API"},
      *     summary="Display list of the books",
@@ -90,13 +91,13 @@ class LibraryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $books = $this->libraryRepository->allBooks($request);
+        $books = $this->bookRepository->allBooks();
         return  $books;
     }
 
-    /**
+       /**
      * @OA\Post(
      *     path="/library/store",
      *     operationId="createBook",
@@ -160,8 +161,8 @@ class LibraryController extends Controller
 
     public function store(BookRequest $request)
     {
-        $book = $this->libraryRepository->storeBook($request);
-        return  $book;
+        $book =  Book::create($request->all());
+        return response()->json($book);
     }
 
 
@@ -203,7 +204,7 @@ class LibraryController extends Controller
 
     public function edit($id)
     {
-        $book = $this->libraryRepository->editBook($id);
+        $book = $this->bookRepository->editBook($id);
         return  $book;
     }
 
@@ -275,7 +276,7 @@ class LibraryController extends Controller
      */
     public function update($id, BookRequest $request)
     {
-        $book = $this->libraryRepository->updateBook($request, $id);
+        $book = $this->bookRepository->updateBook($request, $id);
         return  $book;
     }
 
@@ -317,7 +318,7 @@ class LibraryController extends Controller
      */
     public function destroy($id)
     {
-        $book = $this->libraryRepository->deleteBook($id);
+        $book = $this->bookRepository->deleteBook($id);
         return  $book;
     }
 }

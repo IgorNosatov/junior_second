@@ -14,7 +14,7 @@ class CreateSocialAuthsTable extends Migration
     public function up()
     {
         Schema::create('social_auths', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id('id');
             $table->bigInteger('user_id');           
             $table->string('provider_name')->nullable();
             $table->string('provider_id')->unique()->nullable();          

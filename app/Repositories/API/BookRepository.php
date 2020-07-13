@@ -1,62 +1,33 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\API;
 
 use App\Book;
-use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 
-class LibraryRepository
+class BookRepository
 {
-    public function allBooks(Request $request)
+    public function allBooks()
     {
-        $sortBy = 'id';
-        $orderBy = 'desc';
-        $perPage = 3;
-
-        $books = Book::query();
-
-        if ($request->has('genre')) {
-            $books->where('genre', $request->genre);
-        }
-        if (request()->get('search')) {
-            $search = $request->get('search');
-            $books->where('title', 'like', '%' . $search . '%')->orWhere('author', 'like', '%' . $search . '%');
-        }
-        if ($request->has('orderBy')) {
-            $orderBy = $request->query('orderBy');
-        }
-        if ($request->has('sortBy')) {
-            $sortBy = $request->query('sortBy');
-        }
-        if ($request->has('perPage')) {
-            $perPage = $request->query('perPage');
-        }
-
-        $books = $books
-         ->paginate($perPage)
-         ->appends('genre', request('genre'))
-         ->appends('sortBy', request('sortBy'))
-         ->appends('orderBy', request('orderBy'));
-         
-         return response()->json($books);
+        $books = Book::get();
+        return response()->json($books);
     }
 
-
-    public function storeBook(BookRequest $request)
+    public function storeBook(Request $request)
     {
-        $cover = $request->file('image');
-        $extension = $cover->getClientOriginalExtension();
-        Storage::disk('public')->put($cover->getFilename().'.'.$extension, File::get($cover));
-    
+
         $book = new Book();
         $book->title = $request->title;
         $book->author = $request->author;
         $book->description = $request->description;
         $book->genre = $request->author;
-        $book->image = $cover->getFilename().'.'.$extension;
+        $book->image =$image = $request->file('image');
+        $name = time().'.'.$image->getClientOriginalExtension();
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $name);
         $book->save();
     
         return response()->json('The book successfully added');
@@ -96,8 +67,8 @@ class LibraryRepository
 
     public function deleteBook($id)
     {
-        $data = Book::where('id', $id);
-        $data->delete();
+        $book = Book::findOrFail($id);
+        $book->delete();
         return response()->json('The book successfully deleted');
     }
 }

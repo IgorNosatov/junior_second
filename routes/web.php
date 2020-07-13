@@ -7,9 +7,8 @@ Auth::routes(['verify' => true]);
 Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('login/{provider}/callback','Auth\LoginController@handleProviderCallback');
 
-Route::get('/', 'HomeController@index')->name('home');
-
 Route::group(['middleware' => ['auth','verified']], function () {
+    Route::get('/', 'HomeController@index')->name('home');
     Route::group(['prefix' => '/book','middleware' => ['role:admin']], function () {
         Route::get('/create', 'BookController@create')->name('book.create');
         Route::post('/store', 'BookController@store')->name('book.store');
@@ -25,7 +24,6 @@ Route::group(['middleware' => ['auth','verified']], function () {
         Route::get('/{user}/edit', 'UserController@edit')->name('user.edit');
         Route::patch('/{user}', 'UserController@update')->name('user.update');
     });
-    
 
 });
 
