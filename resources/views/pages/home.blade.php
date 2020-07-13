@@ -17,9 +17,9 @@
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Sort by:</label>
-                <select name="sortBy" id="sortBy" class="form-control form-control-sm" value="{{ $sortBy }}">
+                <select name="sortBy" id="sortBy" class="form-control form-control-sm" value="{{ $sortBy ?? '' ?? '' }}">
                     @foreach(['id', 'title', 'author'] as $col)
-                    <option @if($col==$sortBy) selected @endif value="{{ $col }}">{{ ucfirst($col) }}</option>
+                    <option @if($col==$sortBy ?? '' ?? '') selected @endif value="{{ $col }}">{{ ucfirst($col) }}</option>
                     @endforeach
                 </select>
             </div>
