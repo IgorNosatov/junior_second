@@ -15,23 +15,24 @@ class LaratrustSetupTables extends Migration
         // Create table for storing roles
         if (!Schema::hasTable('roles')) {
             Schema::create('roles', function (Blueprint $table) {
-                $table->bigIncrements('id')->primary();
+                $table->id('id')->primary();
                 $table->string('name')->unique();
                 $table->string('display_name')->nullable();
                 $table->string('description')->nullable();
                 $table->timestamps();
+
             });
         }
 
         // Create table for storing permission
         if (!Schema::hasTable('permissions')) {
             Schema::create('permissions', function (Blueprint $table) {
-                $table->bigIncrements('id')->primary();
+                $table->id('id')->primary();
                 $table->string('name')->unique();
                 $table->string('display_name')->nullable();
                 $table->string('description')->nullable();
                 $table->timestamps();
-
+                
             });
         }
 
@@ -41,7 +42,6 @@ class LaratrustSetupTables extends Migration
                 $table->uuid('role_id');
                 $table->uuid('user_id');
                 $table->string('user_type');
-
              });
             Schema::table('role_user', function($table) {
                 $table->foreign('role_id')->references('id')->on('roles')
@@ -58,7 +58,6 @@ class LaratrustSetupTables extends Migration
                 $table->uuid('permission_id');
                 $table->uuid('user_id');
                 $table->string('user_type');
-
             });
 
             Schema::table('permission_user', function($table) {

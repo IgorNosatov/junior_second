@@ -11,7 +11,6 @@ class HomeController extends Controller
 
     public function __construct(BookRepository $bookRepository)
     {
-        $this->middleware(['auth','verified']);
         $this->bookRepository = $bookRepository;
     }
 

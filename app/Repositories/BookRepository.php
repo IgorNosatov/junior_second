@@ -55,8 +55,8 @@ class BookRepository
         $book->title = $request->title;
         $book->author = $request->author;
         $book->description = $request->description;
-        $book->genre = $request->author;
         $book->image = $cover->getFilename().'.'.$extension;
+        $book->genre = $request->genre;
         $book->save();
     
         return redirect()->route('home')
