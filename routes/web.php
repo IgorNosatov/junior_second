@@ -16,7 +16,6 @@ Route::group(['middleware' => ['auth','verified']], function () {
         Route::patch('/{book}/update', 'BookController@update')->name('book.update');
         Route::delete('/{book}/delete', 'BookController@destroy')->name('book.destroy');
     });
-    
     Route::group(['prefix' => '/user', 'middleware' => ['role:admin']], function () {
         Route::get('/', 'UserController@index')->name('user');
         Route::get('/create', 'UserController@create')->name('user.create');
@@ -24,7 +23,6 @@ Route::group(['middleware' => ['auth','verified']], function () {
         Route::get('/{user}/edit', 'UserController@edit')->name('user.edit');
         Route::patch('/{user}', 'UserController@update')->name('user.update');
     });
-
 });
 
 

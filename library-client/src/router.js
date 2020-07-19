@@ -1,20 +1,18 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Storage from '@/services/Storage';
-
 
 const CreateBook = () =>
-    import ('./components/pages/CreateBook.vue');
+    import ('./pages/CreateBook.vue');
+const Books = () =>
+    import ('./pages/Books.vue');
 const EditBook = () =>
-    import ('./components/pages/EditBook.vue');
-const ListBooks = () =>
-    import ('./components/pages/ListBooks.vue');
+    import ('./pages/EditBook.vue');
 
 // auth pages using same chunk name
-const SignIn = () =>
-    import ('./components/pages/SignIn.vue');
-const SignUp = () =>
-    import ('./components/pages/SignUp.vue');
+const Login = () =>
+    import ('./pages/Login.vue');
+const Register = () =>
+    import ('./pages/Register.vue');
 
 Vue.use(Router);
 
@@ -23,54 +21,61 @@ const router = new Router({
     base: process.env.BASE_URL,
     routes: [{
             path: '/',
-            name: 'listBooks',
-            component: ListBooks
+            name: 'list-books',
+            component: Books
         },
         {
-            path: '/create/',
+            path: '/create',
             name: 'createBook',
-            component: CreateBook
+            component: CreateBook,
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/edit/:id',
             name: 'editBook',
-            component: EditBook
+            component: EditBook,
+
         },
         {
-            path: '/auth/sign-in',
-            name: 'auth.signIn',
-            component: SignIn,
-            meta: { handleAuth: true },
+            path: '/login',
+            name: 'login',
+            component: Login,
+
         },
         {
-            path: '/auth/sign-up',
-            name: 'auth.signUp',
-            component: SignUp,
-            meta: { handleAuth: true },
+            path: '/register',
+            name: 'register',
+            component: Register,
+
         },
+
     ],
 
 });
 
-// проверяем роуты на авторизацию
-router.beforeEach(
-    (to, from, next) => {
-        const isAuthenticatedRoute = to.matched.some(record => record.meta.requiresAuth);
-        const isAuthSectionRoute = to.matched.some(record => record.meta.handleAuth);
-
-        if (isAuthenticatedRoute && !Storage.hasToken()) {
-            next({ name: 'auth.signIn' });
-            return;
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (localStorage.getItem('authKey.jwt') == null) {
+            next({
+                path: '/login',
+                params: { nextUrl: to.fullPath }
+            })
+        } else {
+            let user = JSON.parse(localStorage.getItem('authKey.user'))
+            if (to.matched.some(record => record.meta.is_user)) {
+                if (user !== null) {
+                    next({
+                        path: '/'
+                    })
+                }
+            }
+            next()
         }
-
-        if (isAuthSectionRoute && Storage.hasToken()) {
-            next({ path: '/' });
-            return;
-        }
-
-        next({ path: to });
-    },
-);
-
+    } else {
+        next()
+    }
+})
 
 export default router;

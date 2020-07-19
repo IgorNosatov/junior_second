@@ -12,22 +12,22 @@ class BookRepository
 {
     public function allBooks()
     {
-        $books = Book::get();
+        $books = Book::orderBy('created_at', 'desc')->paginate(33);
         return response()->json($books);
     }
 
     public function storeBook(Request $request)
     {
-
+        $cover = $request->file('image');
+        $extension = $cover->getClientOriginalExtension();
+        Storage::disk('public')->put($cover->getFilename().'.'.$extension, File::get($cover));
+    
         $book = new Book();
         $book->title = $request->title;
         $book->author = $request->author;
         $book->description = $request->description;
-        $book->genre = $request->author;
-        $book->image =$image = $request->file('image');
-        $name = time().'.'.$image->getClientOriginalExtension();
-        $destinationPath = public_path('/images');
-        $image->move($destinationPath, $name);
+        $book->image = $cover->getFilename().'.'.$extension;
+        $book->genre = $request->genre;
         $book->save();
     
         return response()->json('The book successfully added');
@@ -54,15 +54,15 @@ class BookRepository
             $files->move($destinationPath, $extension);
             $book['image'] = "$extension";
         }
-
+         
         $book['title'] = $request->get('title');
         $book['author'] = $request->get('author');
         $book['description'] = $request->get('description');
         $book['genre'] = $request->get('genre');
  
         Book::where('id', $id)->update($book);
-
-        return response()->json('The book successfully updated');
+   
+        return response()->json('The book successfully added');
     }
 
     public function deleteBook($id)
