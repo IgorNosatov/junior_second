@@ -23,52 +23,6 @@ class BookController extends Controller
      *     operationId="booksAll",
      *     tags={"Book API"},
      *     summary="Display list of the books",
-     *     @OA\Parameter(
-     *         description="Search by book title or author name",
-     *         in="query",
-     *         name="search",
-     *         required=false,
-     *         @OA\Schema(
-     *           type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="Order by column",
-     *         in="query",
-     *         name="order_by",
-     *         required=false,
-     *         @OA\Schema(
-     *           type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="Sort by asc/desc",
-     *         in="query",
-     *         name="sort by",
-     *         required=false,
-     *         @OA\Schema(
-     *           type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="Show books by genre",
-     *         in="query",
-     *         name="genre",
-     *         required=false,
-     *         @OA\Schema(
-     *           type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="Paginate the data",
-     *         in="query",
-     *         name="is_paginate",
-     *         @OA\Schema(
-     *           type="string",
-     *           enum={"true", "false"},
-     *           default="true"
-     *         )
-     *     ),
      *     @OA\Response(
      *         response="200",
      *         description="Everything is fine"

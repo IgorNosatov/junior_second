@@ -6,7 +6,6 @@ Auth::routes(['verify' => true]);
 
 Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('login/{provider}/callback','Auth\LoginController@handleProviderCallback');
-
 Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::group(['prefix' => '/book','middleware' => ['role:admin']], function () {

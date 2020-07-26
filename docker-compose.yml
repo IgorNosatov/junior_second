@@ -21,9 +21,23 @@ services:
     container_name: library-db
     restart: unless-stopped
     ports:
-      - "33061:33061"
+      - "33062:33062"
     environment:
       MYSQL_DATABASE: library
+      MYSQL_ROOT_PASSWORD: root
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - library
+
+  db-testing:
+    image: mysql:5.7
+    container_name: library-test
+    restart: unless-stopped
+    ports:
+      - "33061:33061"
+    environment:
+      MYSQL_DATABASE: library-test
       MYSQL_ROOT_PASSWORD: root
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
@@ -41,7 +55,9 @@ services:
       - ./docker-compose/nginx:/etc/nginx/conf.d/
     networks:
       - library
-
 networks:
   library:
     driver: bridge
+
+
+   
