@@ -16,8 +16,26 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
+
+    const TABLE_NAME = "users";
+    
+    const ID =  "id";
+    const NAME = "name";
+    const EMAIL = "email";
+    const PASSWORD = "password";
+    const EMAIL_VERIFIED_AT = "email_varified_at";
+    const REMEMBER_TOKEN ="remember_token";
+
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'id', 'name', 'email', 'password',
+        self::NAME,
+        self::EMAIL,
+        self::PASSWORD,
     ];
 
     /**
@@ -26,7 +44,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        self::PASSWORD,
+        self::REMEMBER_TOKEN
     ];
 
     /**
