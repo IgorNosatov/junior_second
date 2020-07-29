@@ -21,28 +21,6 @@ class BookController extends Controller
      *     operationId="booksAll",
      *     tags={"Book API"},
      *     summary="Display list of the books",
-<<<<<<< HEAD
-     *     @OA\Parameter(
-     *         description="Search by book title or author name",
-     *         in="query",
-     *         name="search",
-     *         required=false,
-     *         @OA\Schema(
-     *           type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="Paginate the data",
-     *         in="query",
-     *         name="is_paginate",
-     *         @OA\Schema(
-     *           type="string",
-     *           enum={"true", "false"},
-     *           default="true"
-     *         )
-     *     ),
-=======
->>>>>>> 93c9561180027577c79c02220331dd04e45f2c39
      *     @OA\Response(
      *         response="200",
      *         description="Everything is fine"
