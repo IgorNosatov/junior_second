@@ -21,6 +21,7 @@ class BookController extends Controller
      *     operationId="booksAll",
      *     tags={"Book API"},
      *     summary="Display list of the books",
+<<<<<<< HEAD
      *     @OA\Parameter(
      *         description="Search by book title or author name",
      *         in="query",
@@ -40,6 +41,8 @@ class BookController extends Controller
      *           default="true"
      *         )
      *     ),
+=======
+>>>>>>> 93c9561180027577c79c02220331dd04e45f2c39
      *     @OA\Response(
      *         response="200",
      *         description="Everything is fine"

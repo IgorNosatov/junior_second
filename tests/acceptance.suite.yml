@@ -1,0 +1,8 @@
+# acceptance.suite.yml
+class_name: AcceptanceTester
+modules:
+    enabled:
+        - WebDriver:
+            url: http://myhost:8000/
+            browser: chrome
+        - \Helper\Acceptance
