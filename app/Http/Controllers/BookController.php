@@ -21,25 +21,25 @@ class BookController extends Controller
 
     public function store(BookRequest $request)
     {
-        $book = $this->bookRepository->storeBook($request);
-        return  $book;
+        $this->bookRepository->storeBook($request);
+        return redirect()->route('home');
     }
 
     public function edit($id)
     {
         $book = $this->bookRepository->editBook($id);
-        return  $book;
+        return view('pages.edit_book', compact('book'));
     }
 
     public function update(BookRequest $request, $id)
     {
-        $book = $this->bookRepository->updateBook($request, $id);
-        return  $book;
+        $this->bookRepository->updateBook($request, $id);
+        return redirect()->route('home');
     }
 
     public function destroy($id)
     {
-        $book = $this->bookRepository->deleteBook($id);
-        return  $book;
+        $this->bookRepository->deleteBook($id);
+        return redirect()->route('home');
     }
 }

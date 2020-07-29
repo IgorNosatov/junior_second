@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers; 
 
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -18,8 +18,12 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+        $sortBy = 'id';
+        $orderBy = 'desc';
+        $perPage = 1;
+        
         $users = $this->userRepository->allUsers($request);
-        return  $users;
+        return view('pages.user', compact('users', 'orderBy', 'sortBy', 'perPage'));
     }
 
     public function create()
@@ -29,19 +33,19 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $user = $this->userRepository->storeUser($request);
-        return  $user;    
+        $this->userRepository->storeUser($request);
+        return redirect('/user')->with('success', 'user has been added');  
     }
 
     public function edit($id)
     {
         $user = $this->userRepository->editUser($id);
-        return  $user;       
+        return view('pages.edit_user', compact('user'));         
     }
 
     public function update(UserRequest $request, $id)
     {
-        $user = $this->userRepository->updateUser($request, $id);
-        return  $user;
+        $this->userRepository->updateUser($request, $id);
+        return redirect('/user')->with('success', 'user updated!');
     }
 }

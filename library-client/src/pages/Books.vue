@@ -39,7 +39,6 @@
 import axios from 'axios';
 import Pagination from '../components/Pagination';
 import { API_BASE_URL } from '../config'
-import {mapActions} from 'vuex';
 
 export default {
 
@@ -58,13 +57,9 @@ export default {
         };
     },
     mounted() {
-        this.FETCH_BOOKS();
-    },
-    computed:{
-     ...mapActions(['FETCH_BOOKS']),
+        this.fetchBooks();
     },
     methods: {
-
         fetchBooks(page = 1) {
             axios.get(API_BASE_URL, {
                 params: {
@@ -79,13 +74,13 @@ export default {
         },
         deleteEntry(id, index) {
             if (confirm("Do you really want to delete book?")) {
-                var app = this;
+                let app = this;
                 axios.delete(API_BASE_URL + '/delete/' + id)
                     .then(function() {
                         app.books.splice(index, 1);
                     })
                     .catch(function() {
-                        alert("Could not delete company");
+                        alert("Could not delete book");
                     });
             }
         }

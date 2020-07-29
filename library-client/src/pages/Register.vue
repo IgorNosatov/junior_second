@@ -47,6 +47,7 @@
 
 <script>
 import axios from 'axios';
+import { API_BASE_AUTH__URL } from '../config';
 
     export default {
         props : ['nextUrl'],
@@ -70,7 +71,7 @@ import axios from 'axios';
                 let email = this.email
                 let password = this.password
                 let c_password = this.password_confirmation
-                axios.post('http://localhost:8000/api/register', {name, email, password, c_password}).then(response => {
+                axios.post(API_BASE_AUTH__URL + '/register', {name, email, password, c_password}).then(response => {
                     let data = response.data
                     localStorage.setItem('authKey.user', JSON.stringify(data.user))
                     localStorage.setItem('authKey.jwt', data.token)

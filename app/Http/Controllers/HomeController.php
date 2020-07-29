@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\BookRepository;
 
-class HomeController extends Controller 
+class HomeController extends Controller
 {
     protected $bookRepository;
 
@@ -16,7 +16,10 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+        $sortBy = 'asc';
+        $orderBy = 'id';
+        $perPage = 3;
         $books = $this->bookRepository->allBooks($request);
-        return  $books;
+        return view('pages.home', compact('books', 'sortBy', 'perPage', 'orderBy'));
     }
 }
