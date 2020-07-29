@@ -13,9 +13,7 @@ class BookRepository
     public function allBooks(Request $request)
     {
         $perPage = 3;
-
         $books = Book::query();
-
         if ($request->has('genre')) {
             $books->where('genre', $request->genre);
         }
