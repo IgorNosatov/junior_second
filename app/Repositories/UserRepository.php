@@ -13,7 +13,7 @@ class UserRepository {
     {
         $sortBy = 'id';
         $orderBy = 'desc';
-        $perPage = 10;
+        $perPage = 1;
 
         $users = User::query();
 
@@ -35,30 +35,27 @@ class UserRepository {
         $users = $users
             ->paginate($perPage)
             ->appends('sortBy', request('sortBy'))
-            ->appends('perPage', request('perPage'))
-            ->appends('orderBy', request('orderBy'));
+            ->appends($sortBy, request('sortBy'))
+            ->appends($orderBy, request('orderBy'));
 
-
-        return view('pages.user', compact('users', 'orderBy', 'sortBy', 'perPage'));
+        return $users;
     }
 
 
     public function storeUser(UserRequest $request)
     {
-        $data = new User([
+        $user = new User([
             'name' => $request->get('name'),
             'email'=> $request->get('email'),
             'password'=> Hash::make($request->get('password'))
         ]);
  
-        $data->save();
-        return redirect('/user')->with('success', 'user has been added');
+        return $user->save();
     }
 
     public function editUser($id)
     {
-        $user = User::findOrFail($id);
-        return view('pages.edit_user', compact('user'));        
+        return User::findOrFail($id); 
     }
 
     public function updateUser(UserRequest $request, $id)
@@ -67,7 +64,6 @@ class UserRepository {
         $user->name =  $request->get('name');
         $user->email = $request->get('email');
         $user->password = Hash::make($request->get('password'));
-        $user->save();
-        return redirect('/user')->with('success', 'user updated!');
+        return $user->save();
     }
 }

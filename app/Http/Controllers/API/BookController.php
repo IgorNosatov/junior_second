@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\API\BookRepository;
+use App\Repositories\BookRepository;
 use App\Http\Requests\BookRequest;
-use App\Book;
-use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
@@ -27,33 +25,6 @@ class BookController extends Controller
      *         description="Search by book title or author name",
      *         in="query",
      *         name="search",
-     *         required=false,
-     *         @OA\Schema(
-     *           type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="Order by column",
-     *         in="query",
-     *         name="order_by",
-     *         required=false,
-     *         @OA\Schema(
-     *           type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="Sort by asc/desc",
-     *         in="query",
-     *         name="sort by",
-     *         required=false,
-     *         @OA\Schema(
-     *           type="string"
-     *         )
-     *     ),
-     *     @OA\Parameter(
-     *         description="Show books by genre",
-     *         in="query",
-     *         name="genre",
      *         required=false,
      *         @OA\Schema(
      *           type="string"
@@ -93,8 +64,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->bookRepository->allBooks();
-        return  $books;
+        $books = $this->bookRepository->showBooks();
+        return response()->json($books);
     }
 
        /**
@@ -161,7 +132,7 @@ class BookController extends Controller
 
     public function store(BookRequest $request)
     {
-        $book =  Book::create($request->all());
+        $book = $this->bookRepository->storeBook($request);
         return response()->json($book);
     }
 
@@ -205,7 +176,7 @@ class BookController extends Controller
     public function edit($id)
     {
         $book = $this->bookRepository->editBook($id);
-        return  $book;
+        return response()->json($book);
     }
 
         /**
@@ -276,8 +247,8 @@ class BookController extends Controller
      */
     public function update($id, BookRequest $request)
     {
-        $book = $this->bookRepository->updateBook($request, $id);
-        return  $book;
+        $this->bookRepository->updateBook($request, $id);
+        return response()->json('The book successfully added');
     }
 
     /**
@@ -318,7 +289,7 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        $book = $this->bookRepository->deleteBook($id);
-        return  $book;
+         $this->bookRepository->deleteBook($id);
+         return response()->json('The book successfully deleted');
     }
 }

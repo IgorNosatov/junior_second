@@ -12,8 +12,6 @@ class BookRepository
 {
     public function allBooks(Request $request)
     {
-        $sortBy = 'id';
-        $orderBy = 'desc';
         $perPage = 3;
 
         $books = Book::query();
@@ -26,24 +24,22 @@ class BookRepository
             $books->where('title', 'like', '%' . $search . '%')->orWhere('author', 'like', '%' . $search . '%');
         }
         if ($request->has('orderBy')) {
-            $orderBy = $request->query('orderBy');
+            $books->orderBy('title', $request->query('orderBy'));
         }
         if ($request->has('sortBy')) {
-            $sortBy = $request->query('sortBy');
+            $books->orderBy( $request->query('sortBy'));
         }
         if ($request->has('perPage')) {
             $perPage = $request->query('perPage');
         }
 
-        $books = $books
-         ->paginate($perPage)
-         ->appends('genre', request('genre'))
-         ->appends('sortBy', request('sortBy'))
-         ->appends('orderBy', request('orderBy'));
-         
-        return view('pages.home', compact('books', 'sortBy', 'perPage', 'orderBy'));
+        return $books->paginate($perPage);
     }
 
+    public function showBooks()
+    {
+        return Book::orderBy('created_at', 'desc')->paginate(25);
+    }
 
     public function storeBook(BookRequest $request)
     {
@@ -57,27 +53,16 @@ class BookRepository
         $book->description = $request->description;
         $book->image = $cover->getFilename().'.'.$extension;
         $book->genre = $request->genre;
-        $book->save();
-    
-        return redirect()->route('home')
-            ->with('success', 'Book added successfully...');
+        return $book->save();
     }
 
     public function editBook($id)
     {
-        $book = Book::findOrFail($id);
-        return view('pages.edit_book', compact('book'));
+        return Book::findOrFail($id);
     }
 
     public function updateBook(BookRequest $request, $id)
     {
-        $book = [
-            'title' => $request->title,
-            'author' => $request->author,
-            'description' => $request->description,
-            'genre' => $request->genre
-         ];
- 
         if ($files = $request->file('image')) {
             $destinationPath = 'uploads/';
             $extension = date('YmdHis') . "." . $files->getClientOriginalExtension();
@@ -90,15 +75,11 @@ class BookRepository
         $book['description'] = $request->get('description');
         $book['genre'] = $request->get('genre');
  
-        Book::where('id', $id)->update($book);
-   
-        return redirect()->route('home')->with('success', 'Book updated successfully...');
+        return Book::where('id', $id)->update($book);
     }
 
     public function deleteBook($id)
     {
-        $data = Book::where('id', $id);
-        $data->delete();
-        return redirect()->route('home');
+        return Book::where('id', $id)->delete();
     }
 }

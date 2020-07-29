@@ -15,7 +15,7 @@
         <form action="/user/">
             <div class="form-group">
                 <label for="exampleInputEmail1">Search User:</label>
-                <input type="search" name="search" class="form-control pb-1" placeholder="Enter book name .....">
+                <input type="search" name="search" class="form-control pb-1" placeholder="Enter user name .....">
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Sort by:</label>
@@ -38,7 +38,7 @@
             <div class="form-group">
                 <label for="perPage">Show book per page:</label>
                 <select name="perPage" id="perPage" class="form-control form-control-sm " value="{{ $perPage }}">
-                    @foreach(['10','20','30','40'] as $page)
+                    @foreach(['2','4','6','8'] as $page)
                     <option @if($page==$perPage) selected @endif value="{{ $page }}">{{ $page }}</option>
                     @endforeach
                 </select>
